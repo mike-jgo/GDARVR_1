@@ -80,6 +80,12 @@ namespace Unity.VRTemplate
                 StartCoroutine(HideSliderAfterSeconds());
         }
 
+        void OnDisable()
+        {
+            if (m_Slider != null)
+                m_Slider.onValueChanged.RemoveListener(OnSliderValueChange);
+        }
+
         void Update()
         {
             if (m_VideoJumpPending)
@@ -177,16 +183,20 @@ namespace Unity.VRTemplate
         {
             m_VideoIsPlaying = false;
             m_VideoPlayer.Pause();
-            m_ButtonPlayOrPauseIcon.sprite = m_IconPlay;
-            m_ButtonPlayOrPause.SetActive(true);
+            if (m_ButtonPlayOrPauseIcon != null)
+                m_ButtonPlayOrPauseIcon.sprite = m_IconPlay;
+            if (m_ButtonPlayOrPause != null)
+                m_ButtonPlayOrPause.SetActive(true);
         }
 
         void VideoPlay()
         {
             m_VideoIsPlaying = true;
             m_VideoPlayer.Play();
-            m_ButtonPlayOrPauseIcon.sprite = m_IconPause;
-            m_ButtonPlayOrPause.SetActive(false);
+            if (m_ButtonPlayOrPauseIcon != null)
+                m_ButtonPlayOrPauseIcon.sprite = m_IconPause;
+            if (m_ButtonPlayOrPause != null)
+                m_ButtonPlayOrPause.SetActive(false);
         }
     }
 }
